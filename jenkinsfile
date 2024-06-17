@@ -7,17 +7,18 @@ pipeline {
             sh './gradlew clean'
           }
         }
+		stage('Test') {
+		  steps {
+			script {
+			try {
+				sh './gradlew test --no-daemon --warning-mode=all'
+			}
+			catch (Exception e) {
+				println("Error ${e}")
+			}
+		  }
+		  }
+		}
     }
-	stage('Test') {
-	  steps {
-		script {
-		try {
-			sh './gradlew test --no-daemon --warning-mode=all'
-		}
-		catch (Exception e) {
-			println("Error ${e}")
-		}
-	  }
-	  }
-	}
 }
+
